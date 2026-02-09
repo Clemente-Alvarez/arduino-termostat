@@ -1,13 +1,5 @@
 //#include "timer.h"
-
 //---------------------------------------- LCD -------------------------------------------------
-// Variables de estado y modos de operación
-#define MODO_APAGADO 0  // Modo de apagado
-#define MODO_ENCENDIDO 1  // Modo de encendido 
-#define MODO_CONTROL_MANUAL 2  // Modo de control manual 
-#define MODO_TERMOSTATO 3  // Modo de termostato 
-#define MODO_POTENCIOMETRO 4  // Modo de potenciómetro
-
 #define SET_BIT(reg, bit) ((reg) |= (1 << (bit)))
 #define CLEAR_BIT(reg, bit) ((reg) &= ~(1 << (bit)))
 
@@ -33,12 +25,9 @@
 #define setPORT_D7(bit) if(bit) SET_BIT(PORTD, PORTD1); else CLEAR_BIT(PORTD, PORTD1); //D7 pin d2
 #define setDDR_D7(bit) if(bit) SET_BIT(DDRD, DDD1); else CLEAR_BIT(DDRD, DDD1);
 
-#define D7 PORTD1
-#define registerD7 PORTD
+#define D7 PIND1
+#define registerD7 PIND
 // ---------------------------------------- END LCD -------------------------------------------------
-
-extern double Setpoint, Input, Output;
-
 // Declaraciones de las funciones que vamos a usar más tarde
 void lcd_init();
 void lcd_command(uint8_t cmd);
@@ -59,4 +48,3 @@ void lcd_scrollDisplayRight();
 void lcd_createChar(uint8_t location, uint8_t charmap[]);
 void pulseEnable();
 bool lcd_checkIfBusy();
-void lcd_actualizarDisplay(byte modo_operacion);

@@ -1,5 +1,6 @@
 #include"Lcd.h"
 
+
 // Función para inicializar el LCD en modo de 4 bits
 void lcd_init() {
   // Configuramos los pines como salida para el LCD
@@ -147,59 +148,9 @@ bool lcd_checkIfBusy(){
   setPORT_RS(0); //poner en modo lectura
   setPORT_RW(1);
   setDDR_D7(0);
-  bool result = (registerD7 >> D7) & 0x01; //leer el flag busy
+  bool result = registerD7 & (1<<D7); //leer el flag busy
   setPORT_RS(1); //poner en modo escritura
   setPORT_RW(0);
   setDDR_D7(1);
   return result;
-}
-void lcd_actualizarDisplay(byte modo_operacion) {
-  lcd_clear();
-  lcd_setCursor(0, 0);
-
-  switch (modo_operacion) {
-    case MODO_APAGADO:
-      lcd_print("Apagado");
-      lcd_setCursor(0, 1);
-      lcd_print("Temp: ");
-      lcd_print(String(Input).c_str());
-      break;
-
-    case MODO_ENCENDIDO:
-      lcd_print("Encendido");
-      lcd_setCursor(0, 1);
-      lcd_print("Temp: ");
-      lcd_print(String(Input).c_str());
-      break;
-
-    case MODO_CONTROL_MANUAL:
-      lcd_print("Control Manual");
-      lcd_setCursor(0, 1);
-      lcd_print("Temp: ");
-      lcd_print(String(Input).c_str());
-      lcd_setCursor(0, 2);
-      lcd_print("Energia: ");
-      lcd_print(String(map(Output, 0, 255, 0, 100)).c_str());
-      break;
-
-    case MODO_TERMOSTATO:
-      lcd_print("Modo Termostato");
-      lcd_setCursor(0, 1);
-      lcd_print("Temp: ");
-      lcd_print(String(Input).c_str());
-      lcd_setCursor(0, 2);
-      lcd_print("Objetivo: ");
-      lcd_print(String(Setpoint).c_str());
-      break;
-
-    case MODO_POTENCIOMETRO:
-      lcd_print("Modo Potenciometro");
-      lcd_setCursor(0, 1);
-      lcd_print("Temp: ");
-      lcd_print(String(Input).c_str());
-      lcd_setCursor(0, 2);
-      lcd_print("Energia: ");
-      lcd_print(String(map(Output, 0, 255, 0, 100)).c_str());
-      break;
-  }
 }
